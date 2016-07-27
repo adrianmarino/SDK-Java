@@ -38,7 +38,7 @@ mvn install:install-file -Dfile=todopago.jar -DgroupId=com.ar.todopago -Dartifac
 Una vez hecho esto se puede agregar la dependencia a este paquete desde el pom.xml
 ```xml
 <dependency>
-	<groupId>com.ar.todopago</groupId>
+	<groupId>ar.com.todopago</groupId>
 	<artifactId>sdk-java</artifactId>
 	<version>1.5.0</version>
 </dependency>
