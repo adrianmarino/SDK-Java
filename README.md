@@ -32,7 +32,7 @@ Se debe descargar la última versión del SDK desde el botón Download ZIP del b
 
 En caso de utilizar Maven, se puede agregar el jar TodoPago.jar al repositorio local de Maven utilizando la siguinte linea de comando:
 ```
-mvn install:install-file -Dfile=todopago.jar -DgroupId=com.ar.todopago -DartifactId=sdk-java -Dversion=x.x.x -Dpackaging=jar
+mvn install:install-file -Dfile=TodoPago.jar -DgroupId=com.ar.todopago -DartifactId=sdk-java -Dversion=x.x.x -Dpackaging=jar
 ``` 
 
 Una vez hecho esto se puede agregar la dependencia a este paquete desde el pom.xml
