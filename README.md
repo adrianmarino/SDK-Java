@@ -57,13 +57,12 @@ De ser necesario agregar la siguiente dependencia requerida por TodoPago desde e
   </dependency>
 ```
 
-Otra alternativa es agregar el jar TodoPago.jar junto con archivo.pom donde se especifique que org.json:json:20090211 es una depedencia de sdk-java. De esta manera, solo es necesario agregar la depedencia de sdk-java en nuestro pom. En el directorio /dist tenemos el pom ya de finido. Solo queda agregar la dependencia al repositorio local:
+Otra alternativa es agregar el jar TodoPago.jar junto con el pom sdk-java-1.5.0.pom. En este último especifica que org.json:json:20090211 es una depedencia de sdk-java. De esta manera, solo es necesario agregar la depedencia sdk-java a nuestro pom. El archivo sdk-java-1.5.0.pom se encuentar en el directorio /dist junto con TodoPago.jar. Podemos agregar la dependencia al repositorio local de la siguente manera:
 
 ```bash
 cd dist
 mvn install:install-file -Dfile=TodoPago.jar -DgroupId=ar.com.todopago -DartifactId=sdk-java -Dversion=1.5.0 -Dpackaging=jar -DpomFile=sdk-java-1.5.0.pom
 ```
-
 
 Una vez descargado se deben hacer los siguientes imports.
 ```java
