@@ -11,7 +11,7 @@ Todo Pago - módulo SDK-JAVA para conexión con gateway de pago
     + [Confirmación de transacción](#confirmatransaccion)
     + [Ejemplo](#ejemplo)
     + [Modo test](#test)
- + [Datos adicionales para prevención de fraude](#datosadicionales) 
+ + [Datos adicionales para prevención de fraude](#datosadicionales)
  + [Características](#caracteristicas)
     + [Status de la operación](#status)
     + [Consulta de operaciones por rango de tiempo](#statusdate)
@@ -34,7 +34,8 @@ En caso de utilizar Maven, se puede agregar el jar TodoPago.jar al repositorio l
 
 ```bash
 cd dist
-mvn install:install-file -Dfile=TodoPago.jar -DgroupId=ar.com.todopago -DartifactId=sdk-java -Dversion=1.5.0 -Dpackaging=jar
+mvn install:install-file -Dfile=TodoPago.jar -DgroupId=ar.com.todopago \
+    -DartifactId=sdk-java -Dversion=1.5.0 -Dpackaging=jar
 ```
 
 Una vez hecho esto se puede agregar la dependencia a este paquete desde el pom.xml
@@ -57,11 +58,12 @@ De ser necesario agregar la siguiente dependencia requerida por TodoPago desde e
   </dependency>
 ```
 
-Otra alternativa es agregar el jar TodoPago.jar junto con el pom sdk-java-1.5.0.pom. En este último especifica que org.json:json:20090211 es una depedencia de sdk-java. De esta manera, solo es necesario agregar la depedencia sdk-java a nuestro pom. El archivo sdk-java-1.5.0.pom se encuentar en el directorio /dist junto con TodoPago.jar. Podemos agregar la dependencia al repositorio local de la siguente manera:
+Otra alternativa es agregar el jar TodoPago.jar junto con el pom sdk-java-1.5.0.pom. En este último se especifica que org.json:json:20090211 es una depedencia de sdk-java. De esta manera, solo es necesario agregar la depedencia sdk-java a nuestro pom. El archivo sdk-java-1.5.0.pom se encuentar en el directorio /dist junto con TodoPago.jar. Podemos agregar la dependencia al repositorio local de la siguente manera:
 
 ```bash
 cd dist
-mvn install:install-file -Dfile=TodoPago.jar -DgroupId=ar.com.todopago -DartifactId=sdk-java -Dversion=1.5.0 -Dpackaging=jar -DpomFile=sdk-java-1.5.0.pom
+mvn install:install-file -Dfile=TodoPago.jar -DgroupId=ar.com.todopago \
+    -DartifactId=sdk-java -Dversion=1.5.0 -Dpackaging=jar -DpomFile=sdk-java-1.5.0.pom
 ```
 
 Una vez descargado se deben hacer los siguientes imports.
@@ -89,10 +91,10 @@ La versi&oacute;n implementada de la SDK, esta testeada para versiones desde Jav
 ####2. Generalidades
 Esta versión soporta únicamente pago en moneda nacional argentina (CURRENCYCODE = 32).
 
-[<sub>Volver a inicio</sub>](#inicio)	
+[<sub>Volver a inicio</sub>](#inicio)
 <br>
 <a name="uso"></a>		
-## Uso	
+## Uso
 
 <a name="initconector"></a>
 ####Inicializar la clase correspondiente al conector (TodoPago\Sdk).
@@ -107,26 +109,26 @@ auth.put(ElementNames.Authorization, Collections.singletonList("PRISMA f3d8b72c9
 
 - Crear una instancia de la clase TodoPago
 ```java		
-TodoPagoConector tpc = new TodoPagoConector(TodoPagoConector.developerEndpoint, auth);//End Point developer y http_header provisto por TODO PAGO	
-```	
+TodoPagoConector tpc = new TodoPagoConector(TodoPagoConector.developerEndpoint, auth);//End Point developer y http_header provisto por TODO PAGO
+```
 
 Si se cuenta el con User y Password del login en TodoPago
 
 - Crear una instancia de la clase TodoPago
 ```java		
 TodoPagoConector tpc = new TodoPagoConector(TodoPagoConector.developerEndpoint);//End Point developer
-```	
+```
 - Obtener las credenciales a traves  del m&eacute;todo getCredentials de TodoPago. Ver [Obtener Credenciales](#credenciales)
 
 <a name="solicitudautorizacion"></a>
-####Solicitud de autorización	
+####Solicitud de autorización
 En este caso hay que llamar a sendAuthorizeRequest(). 		
 ```java		
 Map<String, Object> a = tpc.sendAuthorizeRequest(parameters, getFraudControlParameters());		
-```	
+```
 <ins><strong>datos propios del comercio</strong></ins>		
 El primer atributo parameters, debe ser un Map<String, String> con la siguiente estructura:		
-		
+
 ```java
 Map<String, String> parameters = new HashMap<String, String>();
 	parameters.put(ElementNames.Session, "ABCDEF-1234-12221-FDE1-00000200");
@@ -139,18 +141,18 @@ Map<String, String> parameters = new HashMap<String, String>();
 	parameters.put(ElementNames.UrlOK, "http,//someurl.com/ok/");
 	parameters.put(ElementNames.UrlError, "http,//someurl/fail/");
 	parameters.put(ElementNames.EMAILCLIENTE, "some@someurl.com");
-```	
+```
 
-<ins><strong>datos prevención de fraude</strong></ins>	
+<ins><strong>datos prevención de fraude</strong></ins>
 El segundo atributo getFraudControlParameters().  Ver [Datos adicionales para prevención de fraude](#datosadicionales)  
 
 <p><strong>Códigos de rechazo</strong></p>
-```java	
+```java
 Map<String, Object> 	
 	{ StatusCode = -1,
-	  PublicRequestKey = te0b9bba5-cff9-173a-20da-b9bc8a389ac7, 
-	  URL_Request = https://developers.todopago.com.ar/formulario/commands?command=formulario&m=te0b9bba5-cff9-173a-20da-b9bc8a389ac7, 
-	  StatusMessage = Solicitud de Autorizacion Registrada, 
+	  PublicRequestKey = te0b9bba5-cff9-173a-20da-b9bc8a389ac7,
+	  URL_Request = https://developers.todopago.com.ar/formulario/commands?command=formulario&m=te0b9bba5-cff9-173a-20da-b9bc8a389ac7,
+	  StatusMessage = Solicitud de Autorizacion Registrada,
 	  RequestKey = ff0f6434-a2ab-e87f-3ece-37f7081e671a }
 ```
 
@@ -158,7 +160,7 @@ La **URL_Request** es donde está hosteado el formulario de pago y donde hay que
 
 Si, por ejemplo, se pasa mal el <strong>MerchantID</strong> se obtendrá la siguiente respuesta:
 ```java
-Map<String, Object> 
+Map<String, Object>
 	{ StatusCode = 702,
 	  StatusMessage = ERROR: Cuenta Inexistente }
 ```
@@ -167,14 +169,14 @@ Map<String, Object>
 ####Confirmación de transacción.
 En este caso hay que llamar a **getAuthorizeAnswer()**, enviando como parámetro un Map<String, String> como se describe a continuación.
 
-```java	
+```java
 Map<String, String> parameters = new HashMap<String, String>();		
 	parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // Token de seguridad, provisto por TODO PAGO. MANDATORIO.
 	parameters.put(ElementNames.Merchant, "12345678");
 	parameters.put(ElementNames.RequestKey, "0123-1234-2345-3456-4567-5678-6789");
 	parameters.put(ElementNames.AnswerKey, "1111-2222-3333-4444-5555-6666-7777"); // *Importante
 
-Map<String, Object> b = tpc.getAuthorizeAnswer(parameters);	
+Map<String, Object> b = tpc.getAuthorizeAnswer(parameters);
 ```
 
 Se deben guardar y recuperar los valores de los campos <strong>RequestKey</strong> y <strong>AnswerKey</strong>.
@@ -203,14 +205,14 @@ Map<String, Object>
 							  CURRENCYCODE = 032}
 				}
 	}
-	  
+
 ```		
 Este método devuelve el resumen de los datos de la transacción
 
 Si se pasa mal el <strong>AnswerKey</strong> o el <strong>RequestKey</strong> se verá el siguiente rechazo:
 
 ```java
-Map<String, Object> 
+Map<String, Object>
 	{ StatusCode = 404,
 	  StatusMessage = ERROR: Transaccion Inexistente }
 ```
@@ -219,7 +221,7 @@ Map<String, Object>
 ####Ejemplo
 Existe un ejemplo ejecutable en https://github.com/TodoPago/SDK-Java/blob/master/Ejemplo/src/main/java/com/ar/todopago/ejemplo/SampleUI.java que muestra los resultados de los métodos principales del SDK y su correcta implementacion.<br>
 
-Existe un ejemplo en la carpeta https://github.com/TodoPago/sdk-java/tree/master/src/test que muestra los resultados de los métodos principales del SDK.	
+Existe un ejemplo en la carpeta https://github.com/TodoPago/sdk-java/tree/master/src/test que muestra los resultados de los métodos principales del SDK.
 
 <a name="test"></a>      
 ####Modo Test
@@ -251,15 +253,15 @@ private static Map<String, String> getFraudControlParameters() {
 
 	Map<String, String> parameters = new HashMap<String, String>();		
 	parameters.put("CSBTCITY", "Villa General Belgrano"); //Ciudad de facturación, MANDATORIO.		
-	parameters.put("CSBTCOUNTRY", "AR");//País de facturación. MANDATORIO. Código ISO. (http://apps.cybersource.com/library/documentation/sbc/quickref/countries_alpha_list.pdf)	
+	parameters.put("CSBTCOUNTRY", "AR");//País de facturación. MANDATORIO. Código ISO. (http://apps.cybersource.com/library/documentation/sbc/quickref/countries_alpha_list.pdf)
 	parameters.put("CSBTCUSTOMERID", "453458"); //Identificador del usuario al que se le emite la factura. MANDATORIO. No puede contener un correo electrónico.		
 	parameters.put(CSBTIPADDRESS", "192.0.0.4"); //IP de la PC del comprador. MANDATORIO.		
 	parameters.put(CSBTEMAIL", "some@someurl.com"); //Mail del usuario al que se le emite la factura. MANDATORIO.
 	parameters.put(CSBTFIRSTNAME", "Juan");//Nombre del usuario al que se le emite la factura. MANDATORIO.		
 	parameters.put(CSBTLASTNAME", "Perez");//Apellido del usuario al que se le emite la factura. MANDATORIO.
 	parameters.put(CSBTPHONENUMBER", "541160913988");//Teléfono del usuario al que se le emite la factura. No utilizar guiones, puntos o espacios. Incluir código de país. MANDATORIO.		
-	parameters.put(CSBTPOSTALCODE", "1010");//Código Postal de la dirección de facturación. MANDATORIO.	
-	parameters.put(CSBTSTATE", "B");//Provincia de la dirección de facturación. MANDATORIO. Ver tabla anexa de provincias.	
+	parameters.put(CSBTPOSTALCODE", "1010");//Código Postal de la dirección de facturación. MANDATORIO.
+	parameters.put(CSBTSTATE", "B");//Provincia de la dirección de facturación. MANDATORIO. Ver tabla anexa de provincias.
 	parameters.put(CSBTSTREET1", "Some Street 2153");//Domicilio de facturación (calle y nro). MANDATORIO.			
 	parameters.put("CSBTSTREET2", "Piso 8");//Complemento del domicilio. (piso, departamento). NO MANDATORIO.
 	parameters.put(CSPTCURRENCY", "ARS");//Moneda. MANDATORIO.		
@@ -267,16 +269,16 @@ private static Map<String, String> getFraudControlParameters() {
 	parameters.put(CSMDD7", "");// Fecha registro comprador(num Dias). NO MANDATORIO.		
 	parameters.put(CSMDD8", "Y"); //Usuario Guest? (Y/N). En caso de ser Y, el campo CSMDD9 no deberá enviarse. NO MANDATORIO.		
 	parameters.put(CSMDD9", "");//Customer password Hash: criptograma asociado al password del comprador final. NO MANDATORIO.		
-	parameters.put(CSMDD10", "");//Histórica de compras del comprador (Num transacciones). NO MANDATORIO.	
+	parameters.put(CSMDD10", "");//Histórica de compras del comprador (Num transacciones). NO MANDATORIO.
 	parameters.put(CSMDD11", "");//Customer Cell Phone. NO MANDATORIO.		
 
 	//Retail
-	parameters.put("CSSTCITY", "Villa General Belgrano");//Ciudad de enví­o de la orden. MANDATORIO.	
-	parameters.put("CSSTCOUNTRY", "AR");//País de envío de la orden. MANDATORIO.	
+	parameters.put("CSSTCITY", "Villa General Belgrano");//Ciudad de enví­o de la orden. MANDATORIO.
+	parameters.put("CSSTCOUNTRY", "AR");//País de envío de la orden. MANDATORIO.
 	parameters.put("CSSTEMAIL", "some@someurl.com");//Mail del destinatario, MANDATORIO.			
 	parameters.put("CSSTFIRSTNAME", "Juan");//Nombre del destinatario. MANDATORIO.		
 	parameters.put("CSSTLASTNAME", "Perez");//Apellido del destinatario. MANDATORIO.		
-	parameters.put("CSSTPHONENUMBER", "541160913988");//Número de teléfono del destinatario. MANDATORIO.	
+	parameters.put("CSSTPHONENUMBER", "541160913988");//Número de teléfono del destinatario. MANDATORIO.
 	parameters.put("CSSTPOSTALCODE", "1010");//Código postal del domicilio de envío. MANDATORIO.		
 	parameters.put("CSSTSTATE", "B");//Provincia de envío. MANDATORIO. Son de 1 caracter			
 	parameters.put("CSSTSTREET1", "Some Street 2153");//Domicilio de envío. MANDATORIO.		
@@ -286,16 +288,16 @@ private static Map<String, String> getFraudControlParameters() {
 	parameters.put("CSMDD14", "");//Customer requires Tax Bill ? (Y/N). NO MANDATORIO.		
 	parameters.put("CSMDD15", "");//Customer Loyality Number. NO MANDATORIO. 		
 	parameters.put("CSMDD16", "");//Promotional / Coupon Code. NO MANDATORIO. 		
-	
+
 	//datos a enviar por cada producto, los valores deben estar separado con #:		
-	parameters.put("CSITPRODUCTCODE", "electronic_good");//Código de producto. MANDATORIO. Valores posibles(adult_content;coupon;default;electronic_good;electronic_software;gift_certificate;handling_only;service;shipping_and_handling;shipping_only;subscription)	
-	parameters.put("CSITPRODUCTDESCRIPTION", "Test Prd Description");//Descripción del producto. MANDATORIO.	
-	parameters.put("CSITPRODUCTNAME", "TestPrd");//Nombre del producto. CONDICIONAL.	
+	parameters.put("CSITPRODUCTCODE", "electronic_good");//Código de producto. MANDATORIO. Valores posibles(adult_content;coupon;default;electronic_good;electronic_software;gift_certificate;handling_only;service;shipping_and_handling;shipping_only;subscription)
+	parameters.put("CSITPRODUCTDESCRIPTION", "Test Prd Description");//Descripción del producto. MANDATORIO.
+	parameters.put("CSITPRODUCTNAME", "TestPrd");//Nombre del producto. CONDICIONAL.
 	parameters.put("CSITPRODUCTSKU", "SKU1234");//Código identificador del producto. MANDATORIO.		
 	parameters.put("CSITTOTALAMOUNT", "10.01");//CSITTOTALAMOUNT=CSITUNITPRICE*CSITQUANTITY "999999[.CC]" Con decimales opcional usando el punto como separador de decimales. No se permiten comas, ni como separador de miles ni como separador de decimales. MANDATORIO.		
 	parameters.put("CSITQUANTITY", "1");//Cantidad del producto. CONDICIONAL.		
-	parameters.put("CSITUNITPRICE", "10.01");//Formato Idem CSITTOTALAMOUNT. CONDICIONAL.	
-}	
+	parameters.put("CSITUNITPRICE", "10.01");//Formato Idem CSITTOTALAMOUNT. CONDICIONAL.
+}
 ```
 
 [<sub>Volver a inicio</sub>](#inicio)
@@ -315,9 +317,9 @@ private static Map<String, String> getSParameters(){
 	parameters.put("Merchant", "12345678");
 	parameters.put("OperationID", "8000");
 	return parameters;
-}	
+}
 
-Map<String, Object> d = tpc.getStatus(getSParameters());// Merchant es el id site y OperationID es el id operación que se envió en el array a través del método sendAuthorizeRequest() 
+Map<String, Object> d = tpc.getStatus(getSParameters());// Merchant es el id site y OperationID es el id operación que se envió en el array a través del método sendAuthorizeRequest()
 ```
 El siguiente método retornará el status actual de la transacción en Todopago.
 
@@ -355,7 +357,7 @@ Map<String, Object>
 				PUSHNOTIFYENDPOINT = null,
 				PUSHNOTIFYMETHOD = null,
 				PUSHNOTIFYSTATES = null,
-				REFUNDED = null, 
+				REFUNDED = null,
 				REFUNDS = { REFUND0 = { ID = 50163419,
 										DATETIME = 2016-03-18T16:03:54.987-03:00,
 										AMOUNT = 10.00 },
@@ -367,7 +369,7 @@ Map<String, Object>
 										AMOUNT = 2.00 }
 							}
 						}
-				}	
+				}
 	}					
 ```
 Además, se puede conocer el estado de las transacciones a través del portal [www.todopago.com.ar](http://www.todopago.com.ar/). Desde el portal se verán los estados "Aprobada" y "Rechazada". Si el método de pago elegido por el comprador fue Pago Fácil o RapiPago, se podrán ver en estado "Pendiente" hasta que el mismo sea pagado.
@@ -382,12 +384,12 @@ private static Map<String, String> getBRYParameters() {
 		parameters.put(ElementNames.Merchant, "12345678");
 		parameters.put(ElementNames.STARTDATE, "2016-01-01");
 		parameters.put(ElementNames.ENDDATE, "2016-03-03");
-		parameters.put(ElementNames.PAGENUMBER, "1");	
+		parameters.put(ElementNames.PAGENUMBER, "1");
 		return parameters;
 }
-	
+
 Map<String, Object> j = tpc.getByRangeDateTime(getBRYParameters());
-```	
+```
 
 <a name="devolucion"></a>
 ####Devolución
@@ -399,12 +401,12 @@ Se debe llamar al método ```voidRequest``` de la siguiente manera:
 ```java
 private static Map<String, String> getVRParameters() {
 		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago 
+		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago
 		parameters.put(ElementNames.Merchant, "12345678");// Merchant o Nro de comercio asignado por TodoPago
 		parameters.put(ElementNames.RequestKey, "e31d340c-690c-afe6-c478-fc1bef3fc157");  // RequestKey devuelto como respuesta del servicio SendAutorizeRequest
 		return parameters;
 }
-	
+
 Map<String, Object> h = tpc.voidRequest(getVRParameters());
 ```
 
@@ -413,20 +415,20 @@ También se puede llamar al método ```voidRequest``` de la esta otra manera:
 ```java
 private static Map<String, String> getVRParameters() {
 		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago 
+		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago
 		parameters.put(ElementNames.Merchant, "12345678");// Merchant o Nro de comercio asignado por TodoPago
 		parameters.put(ElementNames.AuthorizationKey, "6d2589f2-37e6-1334-7565-3dc19404480c"); // AuthorizationKey devuelto como respuesta del servicio GetAuthorizeAnswer
 		return parameters;
 }
-	
-Map<String, Object> h = tpc.voidRequest(getVRParameters());	
+
+Map<String, Object> h = tpc.voidRequest(getVRParameters());
 ```
 
 **Respuesta del servicio:**
 Si la operación fue realizada correctamente se informará con un código 2011 y un mensaje indicando el éxito de la operación.
 
 ```java
-Map<String, Object> 
+Map<String, Object>
 	{ StatusCode = 2011,
 	  StatusMessage = Operación realizada correctamente }
 ```
@@ -442,7 +444,7 @@ Se debe llamar al método ```returnRequest``` de la siguiente manera:
 ```java
 private static Map<String, String> getRRParameters() {
 		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago 
+		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago
 		parameters.put(ElementNames.Merchant, "12345678"); // Merchant o Nro de comercio asignado por TodoPago
 		parameters.put(ElementNames.RequestKey, "e31d340c-690c-afe6-c478-fc1bef3fc157");  // RequestKey devuelto como respuesta del servicio SendAutorizeRequest
 		parameters.put(ElementNames.Amount, "10.5"); // Opcional. Monto a devolver, si no se envía, se trata de una devolución total
@@ -456,20 +458,20 @@ También se puede llamar al método ```returnRequest``` de la esta otra manera:
 ```java
 private static Map<String, String> getRRParameters() {
 		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago 
+		parameters.put(ElementNames.Security, "1234567890ABCDEF1234567890ABCDEF"); // API Key del comercio asignada por TodoPago
 		parameters.put(ElementNames.Merchant, "12345678"); // Merchant o Nro de comercio asignado por TodoPago
 		parameters.put(ElementNames.AuthorizationKey, "6d2589f2-37e6-1334-7565-3dc19404480c");  // AuthorizationKey devuelto como respuesta del servicio GetAuthorizeAnswer
 		parameters.put(ElementNames.Amount, "10.5"); // Opcional. Monto a devolver, si no se envía, se trata de una devolución total
 		return parameters;
 }
-Map<String, Object> i = tpc.returnRequest(getRRParameters());	
+Map<String, Object> i = tpc.returnRequest(getRRParameters());
 ```
 
 **Respuesta de servicio:**
 Si la operación fue realizada correctamente se informará con un código 2011 y un mensaje indicando el éxito de la operación.
 
 ```java
-Map<String, Object> 
+Map<String, Object>
 	{ StatusCode = 2011,
 	  StatusMessage = Operación realizada correctamente }
 ```
@@ -479,7 +481,7 @@ Map<String, Object>
 ####Formulario hibrido
 
 **Conceptos basicos**<br>
-El formulario hibrido, es una alternativa al medio de pago actual por redirección al formulario externo de TodoPago.<br> 
+El formulario hibrido, es una alternativa al medio de pago actual por redirección al formulario externo de TodoPago.<br>
 Con el mismo, se busca que el comercio pueda adecuar el look and feel del formulario a su propio diseño.
 
 **Libreria**<br>
@@ -583,29 +585,29 @@ Esta funcionalidad es util para obtener los parametros de configuracion dentro d
 ```java
 
 public void getCredentials(TodoPagoConector tpc) {
-		
+
 		User user = new User("test@test.com", "test1234");// user y pass de TodoPago
-		
+
 		try {
 			user = tpc.getCredentials(user);
-			tpc.setAuthorize(getAuthorization(user));// set de la APIKey a TodoPagoConector 
-			
+			tpc.setAuthorize(getAuthorization(user));// set de la APIKey a TodoPagoConector
+
 		} catch (EmptyFieldException e) {//se debe realizar catch por campos en blanco
 			logger.log(Level.WARNING, e.getMessage());						
 		} catch (MalformedURLException e) {
-			logger.log(Level.WARNING, e.getMessage());	
+			logger.log(Level.WARNING, e.getMessage());
 		} catch (ResponseException e) {
 			logger.log(Level.WARNING, e.getMessage());
 		} catch (ConnectionException e) {
 			logger.log(Level.WARNING, e.getMessage());
 		}
-		System.out.println(user.toString());	
+		System.out.println(user.toString());
 }
-	
+
 	private Map<String, List<String>> getAuthorization(User user) {
 		Map<String, List<String>> parameters = new HashMap<String, List<String>>();
 		parameters.put(ElementNames.Authorization,Collections.singletonList(user.getApiKey()));
-		
+
 		return parameters;
 }
 ```
@@ -615,19 +617,19 @@ public void getCredentials(TodoPagoConector tpc) {
 <a name="maxcuotas"></a>
 ####Máximo de cuotas a mostrar en formulario
 Mediante esta funcionalidad, se permite setear el número máximo de cuotas que se desplegará en el formulario de pago.
- 
+
 Para hacer uso de esta funcionalidad debe agregarse en el **Map<String, String> parameters** del método **sendAuthorizeRequest** el campo **MAXINSTALLMENTS** con el valor máximo de cuotas a ofrecer (generalmente de 1 a 12)
- 
+
 #####Ejemplo
- 
+
 ```java		
 Map<String, String> parameters = new HashMap<String, String>();
-parameters.put(ElementNames.MAXINSTALLMENTS, "12");	
+parameters.put(ElementNames.MAXINSTALLMENTS, "12");
 ```
- 
+
  [<sub>Volver a inicio</sub>](#inicio)
  <br>
- 
+
 
 <a name="secuencia"></a>
 ##Diagrama de secuencia
@@ -639,7 +641,7 @@ parameters.put(ElementNames.MAXINSTALLMENTS, "12");
 <a name="tablareferencia"></a>    
 ## Tablas de Referencia   
 ######[Provincias](#p)    
-				
+
 <p>Solo utilizado para incluir los datos de control de fraude</p>
 <table>		
 <tr><th>Provincia</th><th>Código</th></tr>		
@@ -732,7 +734,7 @@ parameters.put(ElementNames.MAXINSTALLMENTS, "12");
 ## Agregar el proyecto a Eclipse		
 - Bajar Maven 3 de la siguiente URL: http://maven.apache.org/download.cgi
 - Descomprimir lo descargado.
-- Agregar o modificar la variable de entorno M2_HOME con path a donde se descomprime Maven 
+- Agregar o modificar la variable de entorno M2_HOME con path a donde se descomprime Maven
 - Descargar el proyecto de GitHub
 - Por consola ir a la carpeta donde se descargo el proyecto
 - Ejecutar las siguientes lineas:
