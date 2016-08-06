@@ -24,18 +24,21 @@ Todo Pago - módulo SDK-JAVA para conexión con gateway de pago
  + [Tablas de referencia](#tablareferencia)		
  + [Tabla de errores](#codigoerrores)
  + [Agregar el proyecto a Eclipse](#eclipse)
- 
- 
+
+
 <a name="instalacion"></a>		
 ## Instalación
 Se debe descargar la última versión del SDK desde el botón Download ZIP del branch master.
 
-En caso de utilizar Maven, se puede agregar el jar TodoPago.jar al repositorio local de Maven utilizando la siguinte linea de comando:
-```
+En caso de utilizar Maven, se puede agregar el jar TodoPago.jar al repositorio local de Maven utilizando la siguiente linea de comando:
+
+```bash
+cd dist
 mvn install:install-file -Dfile=TodoPago.jar -DgroupId=ar.com.todopago -DartifactId=sdk-java -Dversion=1.5.0 -Dpackaging=jar
-``` 
+```
 
 Una vez hecho esto se puede agregar la dependencia a este paquete desde el pom.xml
+
 ```xml
 <dependency>
 	<groupId>ar.com.todopago</groupId>
@@ -43,7 +46,9 @@ Una vez hecho esto se puede agregar la dependencia a este paquete desde el pom.x
 	<version>1.5.0</version>
 </dependency>
 ```
+
 De ser necesario agregar la siguiente dependencia requerida por TodoPago desde el pom.xml
+
  ```xml
  <dependency>
     <groupId>org.json</groupId>
@@ -51,6 +56,14 @@ De ser necesario agregar la siguiente dependencia requerida por TodoPago desde e
      <version>20090211</version>
   </dependency>
 ```
+
+Otra alternativa es agregar el jar TodoPago.jar junto con archivo.pom donde se especifique que org.json:json:20090211 es una depedencia de sdk-java. De esta manera, solo es necesario agregar la depedencia de sdk-java en nuestro pom. En el directorio /dist tenemos el pom ya de finido. Solo queda agregar la dependencia al repositorio local:
+
+```bash
+cd dist
+mvn install:install-file -Dfile=TodoPago.jar -DgroupId=ar.com.todopago -DartifactId=sdk-java -Dversion=1.5.0 -Dpackaging=jar -DpomFile=sdk-java-1.5.0.pom
+```
+
 
 Una vez descargado se deben hacer los siguientes imports.
 ```java
